@@ -8,6 +8,11 @@ enhancement:
   - /proposal/i
   - /add/i
   - /improve/i
+  - /extend/i
+  - /create/i
+  - /new/i
+  - /implement/i
+  - /allow/i
 
 bug:
   - /bug/i
@@ -38,6 +43,31 @@ question:
   - /help/i
   - /clarification/i
 
+# Website/Frontend/Backend
+website:
+  - /website/i
+  - /web page/i
+  - /web app/i
+  - /iris-website/i
+
+frontend:
+  - /frontend/i
+  - /ui/i
+  - /user interface/i
+  - /component/i
+  - /react/i
+  - /next\.js/i
+  - /button/i
+  - /page/i
+
+backend:
+  - /backend/i
+  - /api/i
+  - /endpoint/i
+  - /server/i
+  - /flask/i
+  - /route/i
+
 # Specific Topics
 size:
   - /passformer_binary_size/i
@@ -64,3 +94,13 @@ model:
   - /training/i
   - /inference/i
   - /weights/i
+
+# Code related
+compiler:
+  - /compile/i
+  - /llvm/i
+  - /clang/i
+  - /optimization/i
+  - /pass/i
+  - /pass sequence/i
+
