@@ -9,8 +9,6 @@ name: "Labeler"
 on:
   issues:
     types: [opened, edited]
-  issue_comment:
-    types: [created, edited]
   pull_request_target:
     types: [opened, synchronize, reopened]
 

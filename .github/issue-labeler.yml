@@ -2,105 +2,43 @@
 
 # Type of Change
 enhancement:
-  - /feature/i
-  - /feature request/i
-  - /enhancement/i
-  - /proposal/i
-  - /add/i
-  - /improve/i
-  - /extend/i
-  - /create/i
-  - /new/i
-  - /implement/i
-  - /allow/i
+  - '(feature|feature request|enhancement|proposal|add|improve|extend|create|new|implement|allow)'
 
 bug:
-  - /bug/i
-  - /fix/i
-  - /issue/i
-  - /error/i
-  - /fail/i
-  - /crash/i
-  - /broken/i
-  - /exception/i
+  - '(bug|fix|issue|error|fail|crash|broken|exception)'
 
 research:
-  - /research/i
-  - /experimental/i
-  - /investigation/i
-  - /study/i
-  - /analysis/i
+  - '(research|experimental|investigation|study|analysis)'
 
 documentation:
-  - /docs/i
-  - /documentation/i
-  - /typo/i
-  - /readme/i
+  - '(docs|documentation|typo|readme)'
 
 question:
-  - /question/i
-  - /how to/i
-  - /help/i
-  - /clarification/i
+  - '(question|how to|help|clarification)'
 
 # Website/Frontend/Backend
 website:
-  - /website/i
-  - /web page/i
-  - /web app/i
-  - /iris-website/i
+  - '(website|web page|web app|iris-website)'
 
 frontend:
-  - /frontend/i
-  - /ui/i
-  - /user interface/i
-  - /component/i
-  - /react/i
-  - /next\.js/i
-  - /button/i
-  - /page/i
+  - '(frontend|ui|user interface|component|react|next\.js|button|page)'
 
 backend:
-  - /backend/i
-  - /api/i
-  - /endpoint/i
-  - /server/i
-  - /flask/i
-  - /route/i
+  - '(backend|api|endpoint|server|flask|route)'
 
 # Specific Topics
 size:
-  - /passformer_binary_size/i
-  - /binary size/i
-  - /code size/i
+  - '(passformer_binary_size|binary size|code size)'
 
 runtime:
-  - /passformer_runtime/i
-  - /execution time/i
-  - /performance/i
-  - /latency/i
+  - '(passformer_runtime|execution time|performance|latency)'
 
 dependencies:
-  - /pip/i
-  - /install/i
-  - /requirements/i
-  - /setup/i
-  - /dependency/i
-  - /package/i
-  - /env/i
+  - '(pip|install|requirements|setup|dependency|package|env)'
 
 model:
-  - /model/i
-  - /training/i
-  - /inference/i
-  - /weights/i
+  - '(model|training|inference|weights)'
 
 # Code related
 compiler:
-  - /compile/i
-  - /llvm/i
-  - /clang/i
-  - /optimization/i
-  - /pass/i
-  - /pass sequence/i
-
+  - '(compile|llvm|clang|optimization|pass|pass sequence)'
