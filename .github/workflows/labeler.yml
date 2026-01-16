@@ -9,6 +9,8 @@ name: "Labeler"
 on:
   issues:
     types: [opened, edited]
+  issue_comment:
+    types: [created, edited]
   pull_request_target:
     types: [opened, synchronize, reopened]
 
@@ -41,3 +43,6 @@ jobs:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
           configuration-path: .github/issue-labeler.yml # Points to Issue rules
           enable-versioned-regex: 0
+          include-title: 1
+          include-body: 1
+          sync-labels: 1
