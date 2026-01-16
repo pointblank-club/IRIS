@@ -1,100 +1,88 @@
-# ML & Model Related
-- label:  "model-training"
-  any: 
-    - changed-files: 
-        - any-glob-patterns:
-            - "training_programs/**"
-            - "models/**"
-            - "models_seqgen/**"
-            - "*. py"
+# ML & Model Components
+model-training:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "training_programs/**"
+          - "models/**"
+          - "models_seqgen/**"
 
-- label: "inference"
-  any:
-    - changed-files:
-        - any-glob-patterns:
-            - "inference_folder/**"
+inference:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "inference_folder/**"
 
-- label: "preprocessing"
-  any:
-    - changed-files:
-        - any-glob-patterns:
-            - "preprocessing/**"
-            - "preprocessing_output/**"
+preprocessing:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "preprocessing/**"
+          - "preprocessing_output/**"
 
-- label: "data"
-  any:
-    - changed-files:
-        - any-glob-patterns:
-            - "data/**"
+data:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "data/**"
 
-# RISC-V & Compiler Related
-- label: "compiler-optimization"
-  any:
-    - changed-files:
-        - any-glob-patterns:
-            - "**/*.c"
-            - "**/*.h"
-            - "tools/**"
+# Website
+website:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "iris-website/**"
+
+# RISC-V & Utilities
+tools:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "tools/**"
+
+compiler:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/*.c"
+          - "**/*.h"
+          - "**/*.cpp"
+
+# Languages
+python:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/*.py"
 
 # Documentation
-- label: "documentation"
-  any:
-    - changed-files:
-        - any-glob-patterns:
-            - "*. md"
-            - "iris-website/**"
+documentation:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/*.md"
+          - "docs/**"
+          - "LICENSE"
+          - "CODE_OF_CONDUCT.md"
+          - "CONTRIBUTING.md"
 
-# Development & Infrastructure
-- label: "ci-cd"
-  any: 
-    - changed-files:
-        - any-glob-patterns: 
-            - ". github/workflows/**"
-            - ". github/labeler.yml"
+# Infrastructure & CI/CD
+ci-cd:
+  - changed-files:
+      - any-glob-to-any-file:
+          - ".github/workflows/**"
 
-- label: "devops"
-  any:
-    - changed-files:
-        - any-glob-patterns:
-            - ". github/**"
-            - ".vscode/**"
-            - ". gitignore"
-            - ". gitattributes"
+devops:
+  - changed-files:
+      - any-glob-to-any-file:
+          - ".github/**"
+          - ".vscode/**"
+          - ".gitignore"
+          - ".gitattributes"
 
-# Configuration
-- label: "configuration"
-  any:
-    - changed-files:
-        - any-glob-patterns:
-            - "**/*.yml"
-            - "**/*.yaml"
-            - "**/*.json"
-            - "**/*.toml"
+# Config
+configuration:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/*.yml"
+          - "**/*.yaml"
+          - "**/*.json"
+          - "**/*.toml"
+          - "**/*.ini"
 
-# Code Quality & Type
-- label: "enhancement"
-  all:
-    - body:  ["feature", "feature request", "enhancement"]
-
-- label: "bug"
-  all:
-    - body: ["bug", "fix", "issue"]
-
-- label: "research"
-  all:
-    - body: ["research", "experimental", "investigation"]
-
-# Specific Components (based on directory structure)
-- label: "logs-metrics"
-  any:
-    - changed-files:
-        - any-glob-patterns:
-            - "logs/**"
-
-- label: "size"
-  all:
-    - body: ["passformer_binary_size"]
-
-- label: "runtime"
-  all:
-    - body: ["passformer_runtime"]
+# Logs
+logs:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "logs/**"

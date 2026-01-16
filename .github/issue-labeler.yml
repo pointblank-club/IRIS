@@ -1,0 +1,66 @@
+# Labels based on description/body keywords for Issues and PRs
+
+# Type of Change
+enhancement:
+  - /feature/i
+  - /feature request/i
+  - /enhancement/i
+  - /proposal/i
+  - /add/i
+  - /improve/i
+
+bug:
+  - /bug/i
+  - /fix/i
+  - /issue/i
+  - /error/i
+  - /fail/i
+  - /crash/i
+  - /broken/i
+  - /exception/i
+
+research:
+  - /research/i
+  - /experimental/i
+  - /investigation/i
+  - /study/i
+  - /analysis/i
+
+documentation:
+  - /docs/i
+  - /documentation/i
+  - /typo/i
+  - /readme/i
+
+question:
+  - /question/i
+  - /how to/i
+  - /help/i
+  - /clarification/i
+
+# Specific Topics
+size:
+  - /passformer_binary_size/i
+  - /binary size/i
+  - /code size/i
+
+runtime:
+  - /passformer_runtime/i
+  - /execution time/i
+  - /performance/i
+  - /latency/i
+
+dependencies:
+  - /pip/i
+  - /install/i
+  - /requirements/i
+  - /setup/i
+  - /dependency/i
+  - /package/i
+  - /env/i
+
+model:
+  - /model/i
+  - /training/i
+  - /inference/i
+  - /weights/i
