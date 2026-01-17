@@ -21,13 +21,15 @@ for entry in data:
     runtime = entry["execution_time"]
     bin_size = entry["binary_size"]
 
-    flat_samples.append({
-        "program": entry["program"],
-        "program_features": feats,
-        "pass_sequence": seq,
-        "runtime": runtime,
-        "binary_size": bin_size
-    })
+    flat_samples.append(
+        {
+            "program": entry["program"],
+            "program_features": feats,
+            "pass_sequence": seq,
+            "runtime": runtime,
+            "binary_size": bin_size,
+        }
+    )
 
 # === FLATTEN FOR XGBOOST (tabular) ===
 # Extract unique passes to one-hot encode
@@ -50,7 +52,11 @@ for sample in flat_samples:
 df = pd.DataFrame(rows)
 
 # === NORMALIZE PROGRAM FEATURES (for ML models) ===
-feature_cols = [c for c in df.columns if c.startswith("total_") or c.startswith("num_") or c.endswith("_ratio")]
+feature_cols = [
+    c
+    for c in df.columns
+    if c.startswith("total_") or c.startswith("num_") or c.endswith("_ratio")
+]
 scaler = StandardScaler()
 df[feature_cols] = scaler.fit_transform(df[feature_cols])
 

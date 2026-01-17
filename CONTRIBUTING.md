@@ -46,11 +46,64 @@ Before contributing, please:
 git clone https://github.com/your-username/IRis.git
 cd IRis
 
+# Install System Dependencies (Ubuntu/Debian)
+sudo apt-get update
+sudo apt-get install -y clang llvm qemu-user-static gcc-riscv64-linux-gnu
+
 # Install Python dependencies
 pip install -r tools/requirements.txt
+pip install black bandit flake8 pytest
 
 # Verify toolchain installation
 cd tools && chmod +x test_tools.sh && ./test_tools.sh
+```
+
+## CI/CD & Local Testing
+
+We use a comprehensive CI pipeline to ensure code quality. Please run these checks locally before submitting a PR.
+
+### 1. Code Formatting (Black)
+We use `black` to ensure consistent code style.
+```bash
+# Check for formatting issues
+black --check .
+
+# Automatically format code
+black .
+```
+
+### 2. Security Checks (Bandit)
+We use `bandit` to scan for common security vulnerabilities.
+```bash
+# Run security scan
+bandit -r . -ll
+```
+
+### 3. Linting (Flake8)
+We use `flake8` to catch syntax errors and undefined names.
+```bash
+# Run linting
+flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+```
+
+### 4. Integration Tests
+Run the core tools to ensure everything is working:
+
+```bash
+# Test Feature Extractor
+python tools/test_feature_extractor.py
+
+# Test Pass Sequence Generator
+python tools/pass_sequence_generator.py -n 5 -s mixed
+
+# Smoke Test Training Data Generation (Native)
+python tools/generate_training_data_hybrid.py \
+    --programs-dir training_programs \
+    --output-dir test_output \
+    --num-sequences 2 \
+    --strategy random \
+    --no-qemu \
+    --target-arch native
 ```
 
 ### Backend Setup (Flask API)

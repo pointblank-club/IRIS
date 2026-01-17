@@ -1,9 +1,35 @@
+# Core ignores
 __pycache__/
-.vscode/
-.ipynb_checkpoints/
-.DS_Store
-env/
 *.pyc
 *.pyo
 *.pyd
-*.sqlite3
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+.vscode/
+.idea/
+.DS_Store
+*.swp
+*.swo
+ci_test_output/
+test_prog
+*.spec
+build/
+dist/
+*.egg-info/
+
+# Ignore intermediate data/logs but keep specific ML artifacts
+training_data/
+preprocessing_output/
+logs/
+inference_folder/model_output/
+
+# Explicitly Allow ML Models and Data (Override ignores if necessary)
+!models/*.pth
+!models/*.pt
+!models/*.pkl
+!data/*.json
+!data/*.csv
