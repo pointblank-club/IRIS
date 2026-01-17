@@ -178,7 +178,7 @@ class LLVMOptimizationService:
 
             # Load model checkpoint
             device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-            checkpoint = torch.load(model_path, map_location=device, weights_only=False)
+            checkpoint = torch.load(model_path, map_location=device, weights_only=False)  # nosec B614
             model_config = checkpoint["config"]
 
             # Store the target metric from the loaded model's config

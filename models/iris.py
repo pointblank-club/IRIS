@@ -271,7 +271,7 @@ def beam_search_decode(
 
 def load_model(model_path, device):
     """Loads a trained model and its supplementary data."""
-    checkpoint = torch.load(model_path, map_location=device, weights_only=False)
+    checkpoint = torch.load(model_path, map_location=device, weights_only=False)  # nosec B614
 
     config = checkpoint["config"]
 

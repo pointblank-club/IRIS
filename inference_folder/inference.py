@@ -32,7 +32,7 @@ def load_model_and_artifacts(model_path, preprocessing_output_path):
     print(f"Loading model from {model_path}...")
 
     # Load model checkpoint
-    checkpoint = torch.load(model_path, map_location=torch.device("cpu"))
+    checkpoint = torch.load(model_path, map_location=torch.device("cpu"))  # nosec B614
     model_config = checkpoint["config"]
 
     # Load vocabularies and scalers

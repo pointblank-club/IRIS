@@ -20,7 +20,7 @@ int main() {
     for (int i = 0; i < 1000; i++) {
         sum += i;
     }
-    printf("Sum: %d\\n", sum);
+    printf(\"Sum: %d\n\", sum);
     return 0;
 }
 """,
@@ -51,7 +51,7 @@ int main() {
     }
     
     // Print result
-    printf("Result: %d\\n", c[N-1][N-1]);
+    printf(\"Result: %d\n\", c[N-1][N-1]);
     return 0;
 }
 """,
@@ -66,7 +66,7 @@ int fibonacci(int n) {
 int main() {
     int n = 20;
     int result = fibonacci(n);
-    printf("Fibonacci(%d) = %d\\n", n, result);
+    printf(\"Fibonacci(%d) = %d\n\", n, result);
     return 0;
 }
 """,
@@ -102,7 +102,7 @@ def test_feature_extraction(program_name: str, code: str) -> Dict[str, Any]:
     print(f"{'='*60}")
 
     response = requests.post(
-        f"{BASE_URL}/features", json={"code": code, "target_arch": "riscv64"}
+        f"{BASE_URL}/features", json={"code": code, "target_arch": "riscv64"}, timeout=10
     )
 
     if response.status_code == 200:
@@ -134,6 +134,7 @@ def test_ml_optimization(program_name: str, code: str, passes: list) -> Dict[str
     response = requests.post(
         f"{BASE_URL}/optimize",
         json={"code": code, "ir_passes": passes, "target_arch": "riscv64"},
+        timeout=10,
     )
 
     if response.status_code == 200:
@@ -166,6 +167,7 @@ def test_standard_optimizations(program_name: str, code: str) -> Dict[str, Any]:
             "opt_levels": ["-O0", "-O1", "-O2", "-O3"],
             "target_arch": "riscv64",
         },
+        timeout=10,
     )
 
     if response.status_code == 200:
@@ -196,6 +198,7 @@ def test_comparison(program_name: str, code: str, passes: list) -> Dict[str, Any
     response = requests.post(
         f"{BASE_URL}/compare",
         json={"code": code, "ir_passes": passes, "target_arch": "riscv64"},
+        timeout=10,
     )
 
     if response.status_code == 200:
@@ -242,7 +245,7 @@ def main():
 
     # Check API health
     try:
-        response = requests.get(f"{BASE_URL}/health")
+        response = requests.get(f"{BASE_URL}/health", timeout=10)
         if response.status_code == 200:
             data = response.json()
             print(f"\n✓ API Status: {data['status']}")

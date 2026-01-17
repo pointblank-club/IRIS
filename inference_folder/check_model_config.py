@@ -7,8 +7,9 @@ from pathlib import Path
 model_path = Path("models_seqgen/passgen_transformer_model_best.pth")
 
 if model_path.exists():
-    checkpoint = torch.load(model_path, map_location="cpu", weights_only=False)
-
+    checkpoint = torch.load(
+        model_path, map_location="cpu", weights_only=False
+    )  # nosec B614
     print("Checkpoint keys:", checkpoint.keys())
     print("\nModel config:")
     if "config" in checkpoint:

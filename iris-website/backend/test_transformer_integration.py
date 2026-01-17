@@ -21,7 +21,7 @@ int factorial(int n) {
 
 int main() {
     int result = factorial(10);
-    printf("Factorial of 10 is %d\\n", result);
+    printf("Factorial of 10 is %d\n", result);
     return 0;
 }
 """
@@ -49,7 +49,7 @@ int main() {
     for (int i = 0; i < n; i++) {
         printf("%d ", arr[i]);
     }
-    printf("\\n");
+    printf("\n");
     return 0;
 }
 """
@@ -84,7 +84,7 @@ int main() {
     matrix_multiply(A, B, C);
     
     // Print a sample result
-    printf("C[0][0] = %d\\n", C[0][0]);
+    printf("C[0][0] = %d\n", C[0][0]);
     return 0;
 }
 """
@@ -97,6 +97,7 @@ def test_feature_extraction():
     response = requests.post(
         f"{BASE_URL}/features",
         json={"code": TEST_CODE_SIMPLE, "target_arch": "riscv64"},
+        timeout=10,
     )
 
     if response.status_code == 200:
@@ -139,6 +140,7 @@ def test_transformer_prediction():
                 "use_transformer": True,
                 "opt_level_hint": opt_level,
             },
+            timeout=10,
         )
 
         if response.status_code == 200:
@@ -183,6 +185,7 @@ def test_manual_vs_transformer():
     response = requests.post(
         f"{BASE_URL}/optimize",
         json={"code": code, "ir_passes": manual_passes, "target_arch": "riscv64"},
+        timeout=10,
     )
 
     manual_metrics = None
@@ -204,6 +207,7 @@ def test_manual_vs_transformer():
             "use_transformer": True,
             "opt_level_hint": "O_2",
         },
+        timeout=10,
     )
 
     transformer_metrics = None
@@ -249,6 +253,7 @@ def test_compare_endpoint():
             "use_transformer": True,
             "opt_level_hint": "O_2",
         },
+        timeout=10,
     )
 
     if response.status_code == 200:
@@ -307,7 +312,7 @@ def main():
 
     try:
         # Check health first
-        response = requests.get(f"{BASE_URL}/health")
+        response = requests.get(f"{BASE_URL}/health", timeout=10)
         if response.status_code != 200:
             print("\n✗ Backend server not responding. Please start it first.")
             return
