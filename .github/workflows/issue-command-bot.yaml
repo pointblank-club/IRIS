@@ -1,0 +1,209 @@
+name: Issue Command Bot
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  process-command:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Process Commands
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const comment = context.payload.comment.body.trim().toLowerCase();
+            const commenter = context.payload.comment.user.login;
+            const issueNumber = context.issue.number;
+            const repoOwner = context.repo.owner;
+            const repoName = context.repo.repo;
+
+            async function handleLabel(labelName, color, description) {
+              try {
+                await github.rest.issues.addLabels({
+                  owner: repoOwner,
+                  repo: repoName,
+                  issue_number: issueNumber,
+                  labels: [labelName]
+                });
+              } catch (error) {
+                if (error.status === 404) {
+                  await github.rest.issues.createLabel({
+                    owner: repoOwner,
+                    repo: repoName,
+                    name: labelName,
+                    color: color || "0e8a16",
+                    description: description || ""
+                  });
+                  await github.rest.issues.addLabels({
+                    owner: repoOwner,
+                    repo: repoName,
+                    issue_number: issueNumber,
+                    labels: [labelName]
+                  });
+                } else {
+                  throw error;
+                }
+              }
+            }
+
+            function parseCommand(comment, cmd) {
+              if (!comment?.includes(cmd)) return null;
+              const cmdIndex = comment.indexOf(cmd);
+              return comment.substring(cmdIndex + cmd.length).trim() || null;
+            }
+
+            try {
+              if (comment?.includes("/assign")) {
+                try {
+                  let assignee = commenter; 
+                  
+                  const assigneeParam = parseCommand(comment, "/assign");
+                  if (assigneeParam && assigneeParam.startsWith("@")) {
+                    assignee = assigneeParam.substring(1).trim();
+                  }
+                  
+                  await github.rest.issues.addAssignees({
+                    owner: repoOwner,
+                    repo: repoName,
+                    issue_number: issueNumber,
+                    assignees: [assignee]
+                  });
+                  
+                  await github.rest.issues.createComment({
+                    owner: repoOwner,
+                    repo: repoName,
+                    issue_number: issueNumber,
+                    body: `✅ Issue assigned to @${assignee}`
+                  });
+                } catch (error) {
+                  await github.rest.issues.createComment({
+                    owner: repoOwner,
+                    repo: repoName,
+                    issue_number: issueNumber,
+                    body: `❌ Failed to assign: ${error.message} !`
+                  });
+                }
+              }
+
+              if (comment?.includes("/close")) {
+                try {
+                  await github.rest.issues.update({
+                    owner: repoOwner,
+                    repo: repoName,
+                    issue_number: issueNumber,
+                    state: "closed",
+                    state_reason: "completed"
+                  });
+                } catch (error) {
+                  await github.rest.issues.createComment({
+                    owner: repoOwner,
+                    repo: repoName,
+                    issue_number: issueNumber,
+                    body: `❌ Failed to close issue: ${error.message} !`
+                  });
+                }
+              }
+
+              if (comment?.includes("/reopen")) {
+                try {
+                  await github.rest.issues.update({
+                    owner: repoOwner,
+                    repo: repoName,
+                    issue_number: issueNumber,
+                    state: "open"
+                  });
+                } catch (error) {
+                  await github.rest.issues.createComment({
+                    owner: repoOwner,
+                    repo: repoName,
+                    issue_number: issueNumber,
+                    body: `❌ Failed to reopen issue: ${error.message} !`
+                  });
+                }
+              }
+
+              if (comment?.includes("/label")) {
+                try {
+                  const labelName = parseCommand(comment, "/label");
+                  if (labelName) {
+                    await handleLabel(labelName, "0e8a16");
+                  }
+                } catch (error) {
+                  await github.rest.issues.createComment({
+                    owner: repoOwner,
+                    repo: repoName,
+                    issue_number: issueNumber,
+                    body: `❌ Failed to add label: ${error.message} !`
+                  });
+                }
+              }
+
+              if (comment?.includes("/help")) {
+                try {
+                  await handleLabel("help wanted", "008672", "Extra attention is needed");
+                } catch (error) {
+                  await github.rest.issues.createComment({
+                    owner: repoOwner,
+                    repo: repoName,
+                    issue_number: issueNumber,
+                    body: `❌ Failed to add help label: ${error.message} !`
+                  });
+                }
+              }
+
+              if (comment?.includes("/needs-triage")) {
+              // commenting hello world to find out why action fail
+                try {
+                  await handleLabel("needs-triage", "d73a4a", "This issue needs triage");
+                } catch (error) {
+                  await github.rest.issues.createComment({
+                    owner: repoOwner,
+                    repo: repoName,
+                    issue_number: issueNumber,
+                    body: `❌ Failed to add triage label: ${error.message} !`
+                  });
+                }
+              }
+              
+              if (comment?.includes("/cc")) {
+                try {
+                  const mentionedUsers = comment.split("/cc")[1]
+                    ?.trim()
+                    .split(/[\s,]+/)
+                    .filter(user => user.startsWith('@'))
+                    .map(user => user.substring(1).trim());
+                  
+                  if (!mentionedUsers || mentionedUsers.length === 0) {
+                    throw new Error("No valid users mentioned to CC");
+                  }
+                  
+                  const mentionText = mentionedUsers.map(user => `@${user}`).join(', ');
+                  await github.rest.issues.createComment({
+                    owner: repoOwner,
+                    repo: repoName,
+                    issue_number: issueNumber,
+                    body: `👋 ${mentionText} - you've been mentioned in this issue by @${commenter}`
+                  });
+                } catch (error) {
+                  await github.rest.issues.createComment({
+                    owner: repoOwner,
+                    repo: repoName,
+                    issue_number: issueNumber,
+                    body: `❌ Failed to mention users: ${error.message} !`
+                  });
+                }
+              }
+
+            } catch (error) {
+              await github.rest.issues.createComment({
+                owner: repoOwner,
+                repo: repoName,
+                issue_number: issueNumber,
+                body: `❌ ${error.message} !`
+              });
+            }

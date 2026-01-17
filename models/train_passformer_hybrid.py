@@ -315,12 +315,10 @@ def main():
     print("Vocabularies, scaler, and feature keys saved.")
 
     if args.dry_run:
-        print("
---- Dry Run Mode ---")
+        print("\n--- Dry Run Mode ---")
         sample_dataloader = DataLoader(dataset, batch_size=min(4, len(dataset)), shuffle=False)
         for i, (program_features, hardware_ids, common_passes_seq, machine_passes_seq, labels) in enumerate(sample_dataloader):
-            print(f"
-Sample Batch {i+1}:")
+            print(f"\nSample Batch {i+1}:")
             print(f"  Program Features shape: {program_features.shape}")
             print(f"  Hardware IDs shape: {hardware_ids.shape}")
             print(f"  Common Passes Seq shape: {common_passes_seq.shape}")
@@ -338,15 +336,13 @@ Sample Batch {i+1}:")
             print(f"  Labels (first sample): {labels[0].tolist()}")
             if i >= 0: # Just print one batch for dry run
                 break
-        print("
-Dry run complete. Exiting.")
+        print("\nDry run complete. Exiting.")
         return
 
     dataloader = DataLoader(dataset, batch_size=args.batch_size, shuffle=True)
 
     # --- Model Initialization ---
-    print("
-Initializing model...")
+    print("\nInitializing model...")
     model = HybridPassFormer(
         common_vocab_size=len(common_pass_vocab),
         machine_vocab_size=len(machine_pass_vocab),
@@ -367,15 +363,13 @@ Initializing model...")
     print(f"Model parameters: {sum(p.numel() for p in model.parameters() if p.requires_grad)}")
 
     # --- Training Loop ---
-    print("
-Starting training...")
+    print("\nStarting training...")
     for epoch in range(args.epochs):
         train_loss = train_epoch(model, dataloader, optimizer, criterion, device)
         # In a real scenario, you'd split into train/val and evaluate
         print(f"Epoch {epoch+1}/{args.epochs}, Train Loss: {train_loss:.4f}")
 
-    print("
-Training complete. Saving model...")
+    print("\nTraining complete. Saving model...")
     
     # --- Save Model and Components ---
     model_save_path = output_path / "hybrid_passformer_model.pth"
