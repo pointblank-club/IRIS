@@ -1,0 +1,88 @@
+# ML & Model Components
+model-training:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "training_programs/**"
+          - "models/**"
+          - "models_seqgen/**"
+
+inference:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "inference_folder/**"
+
+preprocessing:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "preprocessing/**"
+          - "preprocessing_output/**"
+
+data:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "data/**"
+
+# Website
+website:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "iris-website/**"
+
+# RISC-V & Utilities
+tools:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "tools/**"
+
+compiler:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/*.c"
+          - "**/*.h"
+          - "**/*.cpp"
+
+# Languages
+python:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/*.py"
+
+# Documentation
+documentation:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/*.md"
+          - "docs/**"
+          - "LICENSE"
+          - "CODE_OF_CONDUCT.md"
+          - "CONTRIBUTING.md"
+
+# Infrastructure & CI/CD
+ci-cd:
+  - changed-files:
+      - any-glob-to-any-file:
+          - ".github/workflows/**"
+
+devops:
+  - changed-files:
+      - any-glob-to-any-file:
+          - ".github/**"
+          - ".vscode/**"
+          - ".gitignore"
+          - ".gitattributes"
+
+# Config
+configuration:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/*.yml"
+          - "**/*.yaml"
+          - "**/*.json"
+          - "**/*.toml"
+          - "**/*.ini"
+
+# Logs
+logs:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "logs/**"
