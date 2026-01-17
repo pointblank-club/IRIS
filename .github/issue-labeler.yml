@@ -1,0 +1,44 @@
+# Labels based on description/body keywords for Issues and PRs
+
+# Type of Change
+enhancement:
+  - '(feature|feature request|enhancement|proposal|add|improve|extend|create|new|implement|allow)'
+
+bug:
+  - '(bug|fix|issue|error|fail|crash|broken|exception)'
+
+research:
+  - '(research|experimental|investigation|study|analysis)'
+
+documentation:
+  - '(docs|documentation|typo|readme)'
+
+question:
+  - '(question|how to|help|clarification)'
+
+# Website/Frontend/Backend
+website:
+  - '(website|web page|web app|iris-website)'
+
+frontend:
+  - '(frontend|ui|user interface|component|react|next\.js|button|page)'
+
+backend:
+  - '(backend|api|endpoint|server|flask|route)'
+
+# Specific Topics
+size:
+  - '(passformer_binary_size|binary size|code size)'
+
+runtime:
+  - '(passformer_runtime|execution time|performance|latency)'
+
+dependencies:
+  - '(pip|install|requirements|setup|dependency|package|env)'
+
+model:
+  - '(model|training|inference|weights)'
+
+# Code related
+compiler:
+  - '(compile|llvm|clang|optimization|pass|pass sequence)'
