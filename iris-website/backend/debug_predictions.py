@@ -5,6 +5,7 @@ Debug script to analyze why transformer predictions are identical
 
 import sys
 from pathlib import Path
+
 sys.path.insert(0, str(Path(__file__).parent))
 
 from services.llvm_optimization_service import LLVMOptimizationService
@@ -72,17 +73,18 @@ int main() {
     }
     return sum;
 }
-"""
+""",
 }
+
 
 def main():
     print("=" * 80)
     print("Transformer Model Prediction Diagnostic")
     print("=" * 80)
-    
+
     # Initialize service
     service = LLVMOptimizationService(target_arch="riscv64")
-    
+
     # Check if model is loaded
     if service.transformer_model is None:
         print("\n❌ ERROR: Transformer model is NOT loaded!")
@@ -90,67 +92,70 @@ def main():
         return
     else:
         print("\n✓ Transformer model is loaded")
-    
+
     print("\n" + "=" * 80)
     print("Testing predictions for different programs")
     print("=" * 80)
-    
+
     all_predictions = []
     all_features = []
-    
+
     for test_name, code in test_codes.items():
         print(f"\n{'='*60}")
         print(f"Test: {test_name}")
         print(f"{'='*60}")
-        
+
         # Extract features
         success, features, error = service.extract_features_from_c(code)
-        
+
         if not success:
             print(f"❌ Feature extraction failed: {error}")
             continue
-        
+
         print(f"✓ Extracted {len(features)} features")
-        
+
         # Show some key features
-        key_features = ['num_basic_blocks', 'num_instructions', 'num_loops', 
-                       'num_function_calls', 'num_branches']
+        key_features = [
+            "num_basic_blocks",
+            "num_instructions",
+            "num_loops",
+            "num_function_calls",
+            "num_branches",
+        ]
         print("\nKey features:")
         for feat in key_features:
-            value = features.get(feat, features.get(f'feature_{feat}', 'N/A'))
+            value = features.get(feat, features.get(f"feature_{feat}", "N/A"))
             print(f"  {feat}: {value}")
-        
+
         all_features.append(features)
-        
+
         # Predict passes
-        for opt_level in ['O_0', 'O_1', 'O_2', 'O_3']:
+        for opt_level in ["O_0", "O_1", "O_2", "O_3"]:
             success, passes, error = service.predict_passes_with_transformer(
-                features,
-                opt_level=opt_level,
-                beam_size=5
+                features, opt_level=opt_level, beam_size=5
             )
-            
+
             if not success:
                 print(f"  ❌ Prediction failed for {opt_level}: {error}")
                 continue
-            
+
             print(f"\n  {opt_level}: {len(passes)} passes")
             print(f"    {', '.join(passes[:10])}{'...' if len(passes) > 10 else ''}")
             all_predictions.append((test_name, opt_level, passes))
-    
+
     # Analysis
     print("\n" + "=" * 80)
     print("ANALYSIS")
     print("=" * 80)
-    
+
     # Check if all predictions are identical
     unique_predictions = set()
     for test_name, opt_level, passes in all_predictions:
         unique_predictions.add(tuple(passes))
-    
+
     print(f"\nTotal predictions made: {len(all_predictions)}")
     print(f"Unique predictions: {len(unique_predictions)}")
-    
+
     if len(unique_predictions) == 1:
         print("\n⚠️  WARNING: ALL PREDICTIONS ARE IDENTICAL!")
         print("    This indicates a problem with the model:")
@@ -161,36 +166,40 @@ def main():
         for passes in unique_predictions:
             print(f"      {', '.join(passes[:15])}{'...' if len(passes) > 15 else ''}")
     elif len(unique_predictions) < len(all_predictions) * 0.3:
-        print(f"\n⚠️  WARNING: Very few unique predictions ({len(unique_predictions)}/{len(all_predictions)})")
+        print(
+            f"\n⚠️  WARNING: Very few unique predictions ({len(unique_predictions)}/{len(all_predictions)})"
+        )
         print("    Model may be undertrained or overfitted")
     else:
-        print(f"\n✓ Good diversity in predictions ({len(unique_predictions)}/{len(all_predictions)})")
-    
+        print(
+            f"\n✓ Good diversity in predictions ({len(unique_predictions)}/{len(all_predictions)})"
+        )
+
     # Feature diversity analysis
     if len(all_features) > 1:
         print("\n" + "-" * 80)
         print("Feature Diversity Analysis")
         print("-" * 80)
-        
+
         # Compare first two programs
         feat1 = all_features[0]
         feat2 = all_features[1]
-        
+
         differences = 0
         for key in feat1.keys():
             val1 = feat1.get(key, 0)
             val2 = feat2.get(key, 0)
             if val1 != val2:
                 differences += 1
-        
+
         similarity_pct = (1 - differences / len(feat1)) * 100
         print(f"Feature similarity between first two programs: {similarity_pct:.1f}%")
-        
+
         if similarity_pct > 80:
             print("⚠️  Features are very similar - might explain identical predictions")
         else:
             print("✓ Features show good diversity")
-    
+
     print("\n" + "=" * 80)
     print("Recommendation:")
     if len(unique_predictions) <= 2:
@@ -202,5 +211,6 @@ def main():
         print("  4. Increase beam_size or use sampling-based generation")
     print("=" * 80)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()
