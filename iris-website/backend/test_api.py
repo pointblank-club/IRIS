@@ -102,7 +102,9 @@ def test_feature_extraction(program_name: str, code: str) -> Dict[str, Any]:
     print(f"{'='*60}")
 
     response = requests.post(
-        f"{BASE_URL}/features", json={"code": code, "target_arch": "riscv64"}, timeout=10
+        f"{BASE_URL}/features",
+        json={"code": code, "target_arch": "riscv64"},
+        timeout=10,
     )
 
     if response.status_code == 200:
