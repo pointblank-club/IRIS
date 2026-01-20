@@ -1,6 +1,6 @@
-# Contributing to IRIS
+# Contributing to IRis
 
-Thank you for your interest in contributing to IRIS! This document provides guidelines and instructions for contributing to this ML-powered compiler optimization project for RISC-V.
+Thank you for your interest in contributing to IRis! This document provides guidelines and instructions for contributing to this ML-powered compiler optimization project for RISC-V.
 
 ## Table of Contents
 
@@ -347,4 +347,4 @@ If you have questions about contributing:
 
 ---
 
-Thank you for contributing to IRIS! Your efforts help advance ML-powered compiler optimization for the RISC-V ecosystem.
+Thank you for contributing to IRis! Your efforts help advance ML-powered compiler optimization for the RISC-V ecosystem.
