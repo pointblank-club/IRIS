@@ -133,19 +133,29 @@ npm run dev  # Starts on http://localhost:3000
 
 ```
 IRIS/
+├── .github/                    # GitHub workflows and templates
+├── data/                       # Large datasets (Git LFS)
 ├── inference_folder/           # Inference scripts
+├── iris-website/               # Full-stack web application
+│   ├── backend/                # Flask REST API
+│   ├── frontend/               # Next.js frontend
+│   └── README.md
+├── logs/                       # Logs and experiment outputs
+├── models/                     # Model training scripts
+├── models_seqgen/              # Sequence generation model checkpoints
 ├── preprocessing/              # Data preprocessing logic
 ├── preprocessing_output/       # Generated preprocessing artifacts
 ├── tools/                      # ML pipeline utilities
 ├── training_programs/          # C programs for training
-├── data/                       # Large datasets (Git LFS)
-├── models_seqgen/              # Sequence generation model checkpoints
-├── iris-website/               # Full-stack web application
-│   ├── src/                    # Next.js frontend
-│   └── backend/                # Flask REST API
-├── logs/
-├── CONTRIBUTING.md
-└── README.md
+├── .gitattributes              # Git LFS configuration
+├── .gitignore                  # Git ignore rules
+├── CODE_OF_CONDUCT.md          # Community guidelines
+├── CONTRIBUTING.md             # Contribution guidelines
+├── GSOC-2026.md                # GSoC-related information
+├── LICENSE                     # Project license
+├── README.md                   # Project overview and setup
+└── REMAINING_PROGRAMS_TO_ADD.md# Pending training programs
+
 
 ```
 
