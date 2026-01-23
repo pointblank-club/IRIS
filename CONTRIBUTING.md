@@ -154,7 +154,7 @@ IRIS/
 ├── GSOC-2026.md                # GSoC-related information
 ├── LICENSE                     # Project license
 ├── README.md                   # Project overview and setup
-└── REMAINING_PROGRAMS_TO_ADD.md# Pending training programs
+└── REMAINING_PROGRAMS_TO_ADD.md # Pending training programs
 
 
 ```
