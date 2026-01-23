@@ -37,14 +37,24 @@ Before contributing, please:
 - QEMU RISC-V emulator
 - Python 3.8+
 - Node.js 18+ (for frontend)
-- Git LFS (for large model files)
+- Git LFS (for large model and data files)
+
+⚠️ **Git LFS Required**
+
+Some model checkpoints and datasets are tracked using Git LFS.  
+After cloning the repository, run:
+
+```bash
+git lfs install
+git lfs pull
+```
 
 ### Linux Setup
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/IRis.git
-cd IRis
+git clone https://github.com/your-username/IRIS.git
+cd IRIS
 
 # Install System Dependencies (Ubuntu/Debian)
 sudo apt-get update
@@ -53,9 +63,6 @@ sudo apt-get install -y clang llvm qemu-user-static gcc-riscv64-linux-gnu
 # Install Python dependencies
 pip install -r tools/requirements.txt
 pip install black bandit flake8 pytest
-
-# Verify toolchain installation
-cd tools && chmod +x test_tools.sh && ./test_tools.sh
 ```
 
 ## CI/CD & Local Testing
@@ -125,20 +132,29 @@ npm run dev  # Starts on http://localhost:3000
 ## Project Structure
 
 ```
-IRis/
-├── iris.py                    # Core Transformer model & dataset
-├── train_iris_ranker.py       # Ranking model training
-├── train_passformer_hybrid.py # Hybrid optimization training
-├── inference.py               # Model inference
-├── tools/                     # ML pipeline utilities
-│   ├── feature_extractor.py   # LLVM IR feature extraction
-│   ├── pass_sequence_generator.py
-│   └── generate_training_data.py
-├── training_programs/         # 176+ C programs for training
-├── models/                    # Trained model checkpoints
-└── iris-website/              # Full-stack web application
-    ├── src/                   # Next.js frontend
-    └── backend/               # Flask REST API
+IRIS/
+├── .github/                    # GitHub workflows and templates
+├── data/                       # Large datasets (Git LFS)
+├── inference_folder/           # Inference scripts
+├── iris-website/               # Full-stack web application
+│   ├── backend/                # Flask REST API
+│   ├── frontend/               # Next.js frontend
+│   └── README.md
+├── logs/                       # Logs and experiment outputs
+├── models/                     # Model training scripts
+├── models_seqgen/              # Sequence generation model checkpoints
+├── preprocessing/              # Data preprocessing logic
+├── preprocessing_output/       # Generated preprocessing artifacts
+├── tools/                      # ML pipeline utilities
+├── training_programs/          # C programs for training
+├── .gitattributes              # Git LFS configuration
+├── .gitignore                  # Git ignore rules
+├── CODE_OF_CONDUCT.md          # Community guidelines
+├── CONTRIBUTING.md             # Contribution guidelines
+├── GSOC-2026.md                # GSoC-related information
+├── LICENSE                     # Project license
+├── README.md                   # Project overview and setup
+└── REMAINING_PROGRAMS_TO_ADD.md # Pending training programs
 ```
 
 ## How to Contribute
@@ -239,11 +255,11 @@ python test_api.py
 python test_transformer_integration.py
 ```
 
-**Toolchain Verification:**
+**Toolchain Verification (Manual):**
 ```bash
-cd tools
-./test_tools.sh  # Linux
-python test_tools.py  # Windows
+clang --version
+riscv64-linux-gnu-gcc --version
+qemu-riscv64 --version
 ```
 
 ### Writing Tests
