@@ -155,7 +155,6 @@ IRIS/
 ├── LICENSE                     # Project license
 ├── README.md                   # Project overview and setup
 └── REMAINING_PROGRAMS_TO_ADD.md # Pending training programs
-
 ```
 
 ## How to Contribute
